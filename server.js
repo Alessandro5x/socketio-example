@@ -19,8 +19,11 @@ let message = [];
 io.on('connection', socket => {
     console.log(`Socket connectado: ${socket.id}`);
 
+    socket.emit('previousMessages', message);
+
     socket.on('sendMessage', data=> {
         message.push(data);
+        socket.broadcast.emit('receivedMessage', data);
     });
 });
 
